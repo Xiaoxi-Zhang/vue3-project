@@ -1,39 +1,25 @@
 <script setup>
-// 目标：使用deep:true 深度监听对象的变化
-import {reactive, ref, watch} from 'vue'
+import { ref, onMounted } from 'vue';
 
-// 使用deep: true 监听整个对象的变化
-// const state =ref({count: 0})
-// const changeCount = () => {
-//   state.value.count++
-// }
-
-// watch(state, (newVal, oldVal) => {
-//   console.log('newVal:', newVal.count)
-//   console.log('oldVal:', oldVal.count)
-// }, {
-//   deep: true
-// })
-
-// reactive生成的响应式对象进行深度监听
-const state = reactive({count: 0})
-const changeCount = () => {
-  state.count++
-}
-// watch默认可以对reactive生成的响应式对象进行深度监听
-watch(state, (newVal, oldVal) => {
-  console.log('newVal:', newVal.count)
-  console.log('oldVal:', oldVal.count)
+// 1. 先生成一个响应式变量
+const h1Ref = ref(null);
+onMounted(() => {
+  console.log(h1Ref.value); 
 })
 </script>
 
 <template>
-  <div>
-    <p>count: {{ state.count }}</p>
-    <button @click="changeCount">count++</button>
+  <div class="box">
+    <!-- 标签的ref属性的值和响应式对象保持一致 -->
+    <h1 ref="h1Ref">这是h1标题</h1>
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 
-</style>    
+.box {
+  /* width: 200px; */
+  height: 300px;
+  border: 1px solid lightcoral;
+}
+</style>

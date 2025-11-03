@@ -1,17 +1,35 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import FatherCom from './components/FatherCom.vue';
+import { provide, ref } from 'vue';
+// 传递普通类型的数据
+// let str = '祖先中的数据'
+// provide('strKey', str)
+// const changeMsg = () => {
+//   str = '修改之后的数据'
+// }
 
-// 1. 先生成一个响应式变量
-const h1Ref = ref(null);
-onMounted(() => {
-  console.log(h1Ref.value); 
-})
+// 传递响应式数据
+// const str = ref('祖先中的数据')
+// provide('strKey', str)
+// const changeMsg = () => {
+//   str.value = '修改之后的数据'
+// }
+
+// 让子组件点击按钮的时候，修改祖先组件中的数据
+const str = ref('祖先组件中的数据')
+provide('strKey', str)
+const changeStr = () => {
+  str.value = '改变之后的值'
+}
+// provide不仅可以传递数据，还可以传递方法
+provide('changeStr', changeStr)
 </script>
 
 <template>
   <div class="box">
-    <!-- 标签的ref属性的值和响应式对象保持一致 -->
-    <h1 ref="h1Ref">这是h1标题</h1>
+    <h1>祖先组件</h1>
+    <!-- <button @click="changeMsg">change</button> -->
+    <FatherCom></FatherCom>
   </div>
 </template>
 
@@ -19,7 +37,7 @@ onMounted(() => {
 
 .box {
   /* width: 200px; */
-  height: 300px;
-  border: 1px solid lightcoral;
+  padding: 30px;
+  border: 1px solid lightblue;
 }
 </style>

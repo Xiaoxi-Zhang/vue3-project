@@ -1,19 +1,17 @@
 <script setup>
-// 1.使用宏函数 defineEmits 来生成emit函数
-// 2.使用emit函数来触发自定义事件
-// 3.父组件中监听emit中触发的自定义事件
-
-// 注意：使用defineEmits时，必须把事件名在数组中定义好
-const emit = defineEmits(['send-msg']);
-const sendMsg = () => {
-  emit('send-msg', 'this is son msg')
+import { inject } from 'vue';
+const str = inject('strKey'); // 获取祖先组件传递的数据
+const changeStr = inject('changeStr')
+const handleClick = () => {
+  changeStr()
 }
 </script>
 
 <template>
   <div class="son">
-    <h2>子组件</h2>
-    <button @click="sendMsg">向父组件传值</button>
+    <h3>孙子组件</h3>
+    <p>接受祖先组件的数据: {{ str }}</p>
+    <button @click="handleClick">改变str的数据</button>
   </div>
 </template>
 
@@ -21,7 +19,7 @@ const sendMsg = () => {
 
 .son {
   /* width: 100px; */
-  height: 100px;
-  border: 1px solid lightblue;
+  padding: 30px;
+  border: 1px solid lightsalmon;
 }
 </style>
